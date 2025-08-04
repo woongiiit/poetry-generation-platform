@@ -669,7 +669,7 @@ export default function PoetsPage() {
                 transition: { duration: 0.5 }
               }}
               transition={{ 
-                duration: 6,
+                duration: 4,
                 ease: "easeInOut"
               }}
               onAnimationComplete={() => {
