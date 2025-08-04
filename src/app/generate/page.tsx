@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '@/components/Header';
 import { getPoetById } from '@/lib/data';
 import { Poet } from '@/types';
 
-export default function GeneratePage() {
+function GenerateContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const poetId = searchParams.get('poet');
@@ -242,5 +242,20 @@ export default function GeneratePage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function GeneratePage() {
+  return (
+    <Suspense fallback={
+      <div style={{ minHeight: '100vh', backgroundColor: '#f8f6f3', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ width: '3rem', height: '3rem', border: '3px solid #e8dcc8', borderTop: '3px solid #2c1810', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }}></div>
+          <p style={{ color: '#495057' }}>페이지를 로딩하고 있습니다...</p>
+        </div>
+      </div>
+    }>
+      <GenerateContent />
+    </Suspense>
   );
 } 
