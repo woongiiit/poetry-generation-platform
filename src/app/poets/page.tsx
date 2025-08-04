@@ -20,9 +20,8 @@ export default function PoetsPage() {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
-  // 타이머 refs로 메모리 누수 방지
+  // 타이머 ref로 메모리 누수 방지
   const animationTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const transitionTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // 시인별 특화된 시 문장들 메모이제이션
   const poetSpecificVerses = useMemo(() => ({
@@ -202,7 +201,6 @@ export default function PoetsPage() {
 
     // 기존 타이머 정리
     if (animationTimerRef.current) clearTimeout(animationTimerRef.current);
-    if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
 
     setSelectedPoet(poetId);
     
@@ -219,11 +217,8 @@ export default function PoetsPage() {
       setIsAnimating(true);
     }, 0);
 
-    // 8초 후 페이지 전환 (12초 → 8초로 단축)
-    transitionTimerRef.current = setTimeout(() => {
-      console.log('🔄 페이지 전환');
-      router.push(`/generate?poet=${poetId}`);
-    }, 8000);
+    // 낙엽 애니메이션 완료 시 페이지 전환 (onAnimationComplete에서 처리)
+    // transitionTimerRef는 더 이상 사용하지 않음
   }, [isAnimating, isTransitioning, generateVerses, router]);
 
   // 카루셀 네비게이션 최적화
@@ -274,7 +269,6 @@ export default function PoetsPage() {
   React.useEffect(() => {
     return () => {
       if (animationTimerRef.current) clearTimeout(animationTimerRef.current);
-      if (transitionTimerRef.current) clearTimeout(transitionTimerRef.current);
     };
   }, []);
 
@@ -669,11 +663,19 @@ export default function PoetsPage() {
                 scale: [0, 1, 1.1, 1],
                 y: [0, -15, 0]
               }}
+              exit={{ 
+                scale: 0,
+                opacity: 0,
+                transition: { duration: 0.5 }
+              }}
               transition={{ 
                 duration: 3,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "reverse"
+                ease: "easeInOut"
+              }}
+              onAnimationComplete={() => {
+                // 애니메이션 완료 후 페이지 전환
+                console.log('🍂 낙엽 애니메이션 완료, 페이지 전환');
+                router.push(`/generate?poet=${selectedPoet}`);
               }}
               style={{
                 width: '60px',
