@@ -212,12 +212,12 @@ export default function PoetsPage() {
     console.log('🎯 시 문장들 생성 완료:', verses.length, '개');
     console.log('📝 첫 번째 시 문장:', verses[0]?.content);
 
-    // 1초 후 낙엽 효과와 함께 시 문장들 시작 (4초 → 1초로 단축)
+    // 0초 후 낙엽 효과와 함께 시 문장들 시작 (즉시 시작)
     animationTimerRef.current = setTimeout(() => {
       console.log('🍂 낙엽 효과와 시 문장들 시작');
       setIsTransitioning(true);
       setIsAnimating(true);
-    }, 1000);
+    }, 0);
 
     // 8초 후 페이지 전환 (12초 → 8초로 단축)
     transitionTimerRef.current = setTimeout(() => {
