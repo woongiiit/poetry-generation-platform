@@ -4,6 +4,7 @@
 @layer base {
   html {
     font-family: 'Noto Serif KR', serif;
+    overflow-x: hidden;
   }
   
   body {
@@ -15,6 +16,7 @@
       linear-gradient(45deg, transparent 40%, rgba(139, 69, 19, 0.05) 50%, transparent 60%);
     background-attachment: fixed;
     color: #2c1810;
+    overflow-x: hidden;
   }
 }
 
@@ -144,5 +146,14 @@
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #c4b498;
+  }
+  
+  /* 시인카드 스타일 */
+  .poet-card-group {
+    position: relative;
+  }
+  
+  .poet-card {
+    transition: all 0.3s ease;
   }
 } 

@@ -148,7 +148,7 @@ export default function PoetsPage() {
       work.content.slice(0, 3).forEach((line, lineIndex) => {
         verses.push({
           id: `work-${workIndex}-${lineIndex}`,
-          content: line,
+        content: line,
           position: {
             x: Math.random() * windowWidth,
             y: -100 - Math.random() * 200
@@ -545,7 +545,7 @@ export default function PoetsPage() {
       </main>
 
       {/* 배너를 최상위 레벨로 이동 */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {showTooltip && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
@@ -567,21 +567,21 @@ export default function PoetsPage() {
             onAnimationStart={() => console.log('🎬 Banner animation started')}
             onAnimationComplete={() => console.log('✅ Banner animation completed')}
           >
-            <div style={{
-              backgroundColor: 'rgba(248, 246, 243, 0.95)',
-              color: '#2c1810',
-              padding: '1.5rem 3rem',
-              borderRadius: '0.75rem',
-              width: '600px',
-              maxWidth: '90vw',
-              textAlign: 'center',
-              boxShadow: '0 8px 32px rgba(139, 69, 19, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(139, 69, 19, 0.3)',
-              backdropFilter: 'blur(10px)',
-              borderTop: '3px solid rgba(139, 69, 19, 0.5)',
-              borderBottom: '3px solid rgba(139, 69, 19, 0.5)',
-              pointerEvents: 'auto'
-            }}>
+                         <div style={{
+               backgroundColor: 'rgba(248, 246, 243, 0.95)',
+               color: '#2c1810',
+               padding: '1.5rem 3rem',
+               borderRadius: '0.75rem',
+               width: '600px',
+               maxWidth: '90vw',
+               textAlign: 'center',
+               boxShadow: '0 8px 32px rgba(139, 69, 19, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1)',
+               border: '1px solid rgba(139, 69, 19, 0.3)',
+               backdropFilter: 'blur(10px)',
+               borderTop: '3px solid rgba(139, 69, 19, 0.5)',
+               borderBottom: '3px solid rgba(139, 69, 19, 0.5)',
+               pointerEvents: 'none'
+             }}>
               <div style={{
                 fontSize: '1.2rem',
                 fontWeight: '600',
