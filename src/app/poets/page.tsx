@@ -659,7 +659,7 @@ export default function PoetsPage() {
             <motion.div
               initial={{ rotate: 0, scale: 0 }}
               animate={{ 
-                rotate: 360, 
+                rotate: 720, 
                 scale: [0, 1, 1.1, 1],
                 y: [0, -15, 0]
               }}
@@ -669,7 +669,7 @@ export default function PoetsPage() {
                 transition: { duration: 0.5 }
               }}
               transition={{ 
-                duration: 3,
+                duration: 6,
                 ease: "easeInOut"
               }}
               onAnimationComplete={() => {
