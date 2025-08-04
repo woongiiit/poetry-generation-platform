@@ -10,6 +10,7 @@ import { PoetryVerse } from '@/types';
 
 export default function PoetsPage() {
   const router = useRouter();
+  
   const [selectedPoet, setSelectedPoet] = useState<string | null>(null);
   const [flyingVerses, setFlyingVerses] = useState<PoetryVerse[]>([]);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -143,9 +144,9 @@ export default function PoetsPage() {
     const windowWidth = typeof window !== 'undefined' ? window.innerWidth : 1200;
     const windowHeight = typeof window !== 'undefined' ? window.innerHeight : 800;
     
-    // 시인의 대표작 구절들
-    poet.representativeWorks.forEach((work, workIndex) => {
-      work.content.forEach((line, lineIndex) => {
+    // 시인의 대표작 구절들 - 최대 3개만 선택하여 성능 최적화
+    poet.representativeWorks.slice(0, 3).forEach((work, workIndex) => {
+      work.content.slice(0, 3).forEach((line, lineIndex) => {
         verses.push({
           id: `work-${workIndex}-${lineIndex}`,
           content: line,
@@ -159,9 +160,9 @@ export default function PoetsPage() {
       });
     });
     
-    // 시인별 특화된 시 문장들 추가
+    // 시인별 특화된 시 문장들 추가 - 최대 5개만 선택
     const specificVerses = poetSpecificVerses[poetId as keyof typeof poetSpecificVerses] || [];
-    specificVerses.forEach((verse, index) => {
+    specificVerses.slice(0, 5).forEach((verse, index) => {
       verses.push({
         id: `specific-${index}`,
         content: verse,
@@ -174,8 +175,8 @@ export default function PoetsPage() {
       });
     });
     
-    // 추가적인 시 문장들
-    additionalVerses.forEach((verse, index) => {
+    // 추가적인 시 문장들 - 최대 8개만 선택
+    additionalVerses.slice(0, 8).forEach((verse, index) => {
       verses.push({
         id: `additional-${index}`,
         content: verse,
@@ -211,18 +212,18 @@ export default function PoetsPage() {
     console.log('🎯 시 문장들 생성 완료:', verses.length, '개');
     console.log('📝 첫 번째 시 문장:', verses[0]?.content);
 
-    // 4초 후 낙엽 효과와 함께 시 문장들 시작
+    // 1초 후 낙엽 효과와 함께 시 문장들 시작 (4초 → 1초로 단축)
     animationTimerRef.current = setTimeout(() => {
       console.log('🍂 낙엽 효과와 시 문장들 시작');
       setIsTransitioning(true);
       setIsAnimating(true);
-    }, 4000);
+    }, 1000);
 
-    // 12초 후 페이지 전환
+    // 8초 후 페이지 전환 (12초 → 8초로 단축)
     transitionTimerRef.current = setTimeout(() => {
       console.log('🔄 페이지 전환');
       router.push(`/generate?poet=${poetId}`);
-    }, 12000);
+    }, 8000);
   }, [isAnimating, isTransitioning, generateVerses, router]);
 
   // 카루셀 네비게이션 최적화
@@ -406,7 +407,14 @@ export default function PoetsPage() {
                     background: 'linear-gradient(to bottom right, #495057, #212529)'
                   }}>
                     <img 
-                      src={`https://picsum.photos/120/120?random=${poets[currentIndex].id}`}
+                      src={`/images/poets/${poets[currentIndex].id === '1' ? 'yoon-dongju' : 
+                                   poets[currentIndex].id === '2' ? 'kim-sowol' :
+                                   poets[currentIndex].id === '3' ? 'han-yongun' :
+                                   poets[currentIndex].id === '4' ? 'park-mokwol' :
+                                   poets[currentIndex].id === '5' ? 'jo-jihun' :
+                                   poets[currentIndex].id === '6' ? 'kim-chunsu' :
+                                   poets[currentIndex].id === '7' ? 'jeong-jiyong' :
+                                   poets[currentIndex].id === '8' ? 'kim-suyoung' : 'default'}.jpg`}
                       alt={`${poets[currentIndex].name} 시인`}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       onError={(e) => {
@@ -439,7 +447,7 @@ export default function PoetsPage() {
                   }}>
                     {poets[currentIndex].era} • {poets[currentIndex].description}
                   </p>
-                  
+                   
                   <div style={{ 
                     display: 'flex', 
                     flexWrap: 'wrap', 
@@ -650,7 +658,7 @@ export default function PoetsPage() {
                 marginBottom: '2rem'
               }}
             >
-              {selectedPoetData?.name}의 시가 바람에 날아갑니다...
+              {selectedPoetData?.name}의 시가 흩날립니다...
             </motion.div>
             
             {/* 회전하는 낙엽 애니메이션 */}

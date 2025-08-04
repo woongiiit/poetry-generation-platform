@@ -106,15 +106,33 @@ function GenerateContent() {
               <div style={{
                 width: '4rem',
                 height: '4rem',
-                background: 'linear-gradient(to bottom right, #495057, #212529)',
                 borderRadius: '50%',
+                overflow: 'hidden',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                background: 'linear-gradient(to bottom right, #495057, #212529)'
               }}>
-                <span style={{ color: '#f5f2ed', fontWeight: 'bold', fontSize: '1.25rem' }}>
-                  {poet.name.charAt(0)}
-                </span>
+                <img 
+                  src={`/images/poets/${poet.id === '1' ? 'yoon-dongju' : 
+                               poet.id === '2' ? 'kim-sowol' :
+                               poet.id === '3' ? 'han-yongun' :
+                               poet.id === '4' ? 'park-mokwol' :
+                               poet.id === '5' ? 'jo-jihun' :
+                               poet.id === '6' ? 'kim-chunsu' :
+                               poet.id === '7' ? 'jeong-jiyong' :
+                               poet.id === '8' ? 'kim-suyoung' : 'default'}.jpg`}
+                  alt={`${poet.name} 시인`}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent) {
+                      parent.innerHTML = `<span style="color: #f5f2ed; font-weight: bold; font-size: 1.25rem;">${poet.name.charAt(0)}</span>`;
+                    }
+                  }}
+                />
               </div>
               <div>
                 <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#2c1810' }}>{poet.name}</h2>
